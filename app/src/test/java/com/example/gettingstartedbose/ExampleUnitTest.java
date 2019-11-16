@@ -1,4 +1,4 @@
-package com.example.kmw_bose;
+package com.example.gettingstartedbose;
 
 import org.junit.Test;
 

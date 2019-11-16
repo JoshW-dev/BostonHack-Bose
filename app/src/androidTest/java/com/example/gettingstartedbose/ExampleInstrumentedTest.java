@@ -1,4 +1,4 @@
-package com.example.kmw_bose;
+package com.example.gettingstartedbose;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.kmw_bose", appContext.getPackageName());
+        assertEquals("com.example.gettingstartedbose", appContext.getPackageName());
     }
 }

@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='KMW_Bose'
+rootProject.name='GettingStartedBose'

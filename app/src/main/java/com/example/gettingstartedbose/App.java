@@ -9,6 +9,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
+        System.out.println("Started");
         super.onCreate();
         BoseWearable.configure(this, new Config.Builder().build());
     }

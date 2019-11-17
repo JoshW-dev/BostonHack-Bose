@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     public double dt =0;
     public Quaternion initialOrientation;
     public Quaternion currentOrientation;
+    public boolean volumeToggle;
     //both quats
     public double yawDiff =0;
 
@@ -93,16 +94,16 @@ public class MainActivity extends AppCompatActivity {
     }
     AudioManager audio;
 
-    public void buttonOnClick(View v) {
+    public void buttonOnClick() {
         initVOl = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
-        Button button=(Button)v;
-        ((Button) v).setText("clicked");
+        //Button button=(Button)v;
+        //((Button) v).setText("clicked");
         audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
 
     }
-    public void buttonOnClick2(View v) {
-        Button button=(Button)v;
-        ((Button) v).setText("clicked");
+    public void buttonOnClick2() {
+       // Button button=(Button)v;
+        //((Button) v).setText("clicked");
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, initVOl, 1);
     }
     @Override
@@ -240,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
                     if(first){
                         initialOrientation= sensorData.quaternion();
                         first = false;
+                        volumeToggle = true;
                     }//first is measured once then constant
                     currentOrientation = sensorData.quaternion();
                     Quaternion diff = quatDifference(initialOrientation, currentOrientation);
@@ -252,11 +254,22 @@ public class MainActivity extends AppCompatActivity {
 
                     if(diff.zRotation()*180/3.1415 > 40){
                         gyro.setText("Left");
-
+                        if(volumeToggle == true){
+                            buttonOnClick();
+                            volumeToggle = false;
+                        }
                     } else if(diff.zRotation()*180/3.1415 < -40){
                         gyro.setText("Right");
+                        if(volumeToggle == true){
+                            buttonOnClick();
+                            volumeToggle = false;
+                        }
                     } else {
                         gyro.setText("Center");
+                        if(volumeToggle == false){
+                            buttonOnClick2();
+                            volumeToggle = true;
+                        }
                     }
 
                     //       Log.d("Game", "_________________________________");

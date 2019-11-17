@@ -2,6 +2,7 @@ package com.example.KMWapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 
 import com.bose.blecore.BluetoothManager;
@@ -77,9 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
         startActivityForResult(intent, REQUEST_CODE_CONNECTOR);
     }
+    AudioManager audio;
     public void buttonOnClick(View v) {
         Button button=(Button)v;
         ((Button) v).setText("clicked");
+        audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

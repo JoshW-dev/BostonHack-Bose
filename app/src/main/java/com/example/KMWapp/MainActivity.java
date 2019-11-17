@@ -64,10 +64,10 @@ public class MainActivity extends AppCompatActivity {
     public Quaternion initialOrientation;
     public Quaternion currentOrientation;
     public boolean volumeToggle;
-    public View state = findViewById(R.id.textView4);
-    public View gesture = findViewById(R.id.textView5);
-    public View listen = findViewById(R.id.Listen);
-    public View mute = findViewById(R.id.Mute);
+    public View state;
+    public View gesture;
+    public View listen;
+    public View mute;
     //both quats
     public double yawDiff =0;
 
@@ -80,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
+        state = findViewById(R.id.textView4);
+        gesture = findViewById(R.id.textView5);
+        listen = findViewById(R.id.Listen);
+        mute = findViewById(R.id.Mute);
     }
 
     public void connect(View v) {

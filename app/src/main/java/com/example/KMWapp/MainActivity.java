@@ -41,6 +41,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -66,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean volumeToggle;
     public View state;
     public View gesture;
-    public View listen;
-    public View mute;
+    public ImageView listen;
+    public ImageView mute;
     //both quats
     public double yawDiff =0;
 
@@ -288,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
                         gyro.setText("Aware");
                         if(volumeToggle == true){
                             buttonOnClick();
-                            listen.setVisibility(View.INVISIBLE);
+                            listen.setImageResource(View.INVISIBLE);
                             mute.setVisibility(View.VISIBLE);
                             volumeToggle = false;
                         }

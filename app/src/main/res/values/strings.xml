@@ -2,7 +2,7 @@
     <string name="app_name">GettingStartedBose</string>
     <string name="action_settings">Settings</string>
     <string name="accel">Empty</string>
-    <string name="gyro">Empty</string>
-    <string name="gam">Empty</string>
-    <string name="rot">Empty</string>
+    <string name="gyro">Focus</string>
+    <string name="gam">Focus</string>
+    <string name="rot">Focus</string>
 </resources>

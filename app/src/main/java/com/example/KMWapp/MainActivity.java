@@ -11,9 +11,11 @@ import com.bose.blecore.SessionDelegate;
 import com.bose.bosewearableui.DeviceConnectorActivity;
 import com.bose.wearable.BoseWearable;
 import com.bose.wearable.BoseWearableException;
+import com.bose.wearable.sensordata.GestureData;
 import com.bose.wearable.sensordata.GestureIntent;
 import com.bose.wearable.sensordata.SensorIntent;
 import com.bose.wearable.sensordata.SensorValue;
+import com.bose.wearable.services.wearablesensor.GestureConfiguration;
 import com.bose.wearable.services.wearablesensor.GestureType;
 import com.bose.wearable.services.wearablesensor.SamplePeriod;
 import com.bose.wearable.services.wearablesensor.SensorConfiguration;
@@ -101,6 +103,17 @@ public class MainActivity extends AppCompatActivity {
 
                 wearableDevice.addListener(wearableDeviceListener);
 
+                // Enable double tap gesture
+                GestureConfiguration config = wearableDevice.gestureConfiguration()
+                        .disableAll()
+                        .gestureEnabled(GestureType.DOUBLE_TAP, true)
+                        .gestureEnabled(GestureType.SINGLE_TAP, true)
+                        .gestureEnabled(GestureType.HEAD_NOD, true)
+                        .gestureEnabled(GestureType.HEAD_SHAKE, true);
+
+
+                wearableDevice.changeGestureConfiguration(config);
+
                 // Enable accelerometer and gyroscope
                 SamplePeriod samplePeriod = SamplePeriod._320_MS;
                 SensorConfiguration configuration = wearableDevice.sensorConfiguration()
@@ -148,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             switch (sensorData.sensorType()) {
                 case ACCELEROMETER:
 //                     Handle accelerometer reading
-                    Log.d("Accelerometer", sensorData.toString());
+                   // Log.d("Accelerometer", sensorData.toString());
                     TextView textview = findViewById(R.id.textView3);
                     textview.setText(sensorData.vector().toString());
                     if (sensorData.vector() == null) {
@@ -156,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
 
-                    Log.d("Accelerometer", "x: " + sensorData.vector().x());
+                  //  Log.d("Accelerometer", "x: " + sensorData.vector().x());
 //                    Log.d("Accelerometer", "y: " + sensorData.vector().y());
 //                    Log.d("Accelerometer", "z: " + sensorData.vector().z());
 
@@ -164,13 +177,13 @@ public class MainActivity extends AppCompatActivity {
                 case ROTATION_VECTOR:
                     // Handle gyroscope reading
 
-                    Log.d("Rotation", sensorData.toString());
+                 //   Log.d("Rotation", sensorData.toString());
                     if (sensorData.quaternion() == null) {
                         Log.d("Rotation", "Q value null");
                         return;
                     }
 
-                    Log.d("Rotation", "x: " + sensorData.quaternion().pitch());
+                 //   Log.d("Rotation", "x: " + sensorData.quaternion().pitch());
                     break;
                 case GAME_ROTATION_VECTOR:
                     // Handle gyroscope reading
@@ -185,8 +198,8 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.d("Game", "_________________________________");
 
 
-                    Log.d("Game", "x: " + sensorData.quaternion().yRotation());
-                    Log.d("Game", "_________________________________");
+             //       Log.d("Game", "x: " + sensorData.quaternion().yRotation());
+             //       Log.d("Game", "_________________________________");
 
 
 //                    Log.d("Game", "x: " + sensorData.quaternion().zRotation());
@@ -194,17 +207,41 @@ public class MainActivity extends AppCompatActivity {
                 case GYROSCOPE:
 //                     Handle gyroscope reading
 
-                    Log.d("Gyroscope", sensorData.toString());
+              //      Log.d("Gyroscope", sensorData.toString());
                     if (sensorData.vector() == null) {
                         Log.d("Gyroscope", "Q value null");
                         return;
                     }
 
-                    Log.d("Gyroscope", "x: " + sensorData.vector().x());
+             //       Log.d("Gyroscope", "x: " + sensorData.vector().x());
                     break;
             }
         }
-    };
+
+
+        //gestures
+        @Override
+        public void onGestureConfigurationRead(@NonNull GestureConfiguration gestureConfiguration) {
+            // Gesture configuration has been updated,
+        }
+
+        @Override
+        public void onGestureConfigurationChanged(@NonNull GestureConfiguration gestureConfiguration) {
+            // Gesture configuration change was accepted.
+        }
+
+        @Override
+        public void onGestureConfigurationError(@NonNull BoseWearableException wearableException) {
+            // Gesture configuration change was rejected with the specified exception.
+        }
+
+        @Override
+        public void onGestureDataRead(@NonNull GestureData gestureData) {
+            // Gesture received.
+            Log.d("Gesture", "" + gestureData.toString());
+        }
+
+    };//on sensor read
 
 
 

@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        TextView textview = findViewById(R.id.textView3);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,12 +250,13 @@ public class MainActivity extends AppCompatActivity {
                             +diff.yRotation()*180/3.1415 + ", "
                             + diff.zRotation()*180/3.1415);//yaw diff from initial
 
-                    if(diff.zRotation()*180/3.1415 > 60){
+                    if(diff.zRotation()*180/3.1415 > 40){
                         gyro.setText("Left");
-                    } else if(diff.zRotation()*180/3.1415 < -60){
+
+                    } else if(diff.zRotation()*180/3.1415 < -40){
                         gyro.setText("Right");
                     } else {
-                        gyro.setText('No action')
+                        gyro.setText("Center");
                     }
 
                     //       Log.d("Game", "_________________________________");

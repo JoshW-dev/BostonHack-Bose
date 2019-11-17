@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Button
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,7 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
         startActivityForResult(intent, REQUEST_CODE_CONNECTOR);
     }
-
+    public void buttonOnClick(View v) {
+        Button button=(Button)v;
+        ((Button) v).setText("clicked");
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 

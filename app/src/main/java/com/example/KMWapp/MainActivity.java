@@ -18,6 +18,7 @@ import com.bose.wearable.BoseWearable;
 import com.bose.wearable.BoseWearableException;
 import com.bose.wearable.sensordata.GestureData;
 import com.bose.wearable.sensordata.GestureIntent;
+import com.bose.wearable.sensordata.Quaternion;
 import com.bose.wearable.sensordata.SensorIntent;
 import com.bose.wearable.sensordata.SensorValue;
 import com.bose.wearable.services.wearablesensor.GestureConfiguration;
@@ -43,6 +44,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Button;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
@@ -53,12 +55,17 @@ public class MainActivity extends AppCompatActivity {
     private static final int AUTO_CONNECT_TIMEOUT = 5; // In seconds, use 0 to disable automatic reconnection
     private static final int REQUEST_CODE_CONNECTOR = 1;
 
+    DecimalFormat df = new DecimalFormat("#.####");
+
+    public boolean first = true;
     public double time_1 =0;
     public double time_2 =0;
     public double dt =0;
-    public double yaw_1 =0;
-    public double yaw_2 =0;
-    public double dYaw =0;
+    public Quaternion initialOrientation;
+    public Quaternion currentOrientation;
+    //both quats
+    public double yawDiff =0;
+
     public int initVOl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        TextView textview = findViewById(R.id.textView3);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,15 +193,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onSensorDataRead(@NonNull SensorValue sensorData) {
-            TextView accel = findViewById(R.id.textView3);
             TextView gyro = findViewById(R.id.textView4);
             TextView gam = findViewById(R.id.textView5);
-            TextView rot = findViewById(R.id.textView6);
             switch (sensorData.sensorType()) {
                 case ACCELEROMETER:
 //                     Handle accelerometer reading
                  //   Log.d("Accelerometer", sensorData.toString());
-                    accel.setText(sensorData.vector().toString());
                     if (sensorData.vector() == null) {
                         Log.d("Accelerometer", "vector value null");
                         return;
@@ -208,7 +211,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case ROTATION_VECTOR:
                     // Handle gyroscope reading
-                   rot.setText(sensorData.quaternion().toString());
                   //  Log.d("Rotation", sensorData.toString());
                     if (sensorData.quaternion() == null) {
                         Log.d("Rotation", "Q value null");
@@ -229,22 +231,37 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.d("Game", "x: " + sensorData.quaternion().xRotation());
 //                    Log.d("Game", "_________________________________");
 
-                    gam.setText("pitch:" +sensorData.quaternion().xRotation() + "\n"+
-                         "roll:" +sensorData.quaternion().yRotation() + "\n"+
-                         "yaw:" +sensorData.quaternion().zRotation() );
+                    gam.setText("X: "+String.valueOf(df.format(sensorData.quaternion().x())) + "\n"
+                                    +"Y: "+String.valueOf(df.format(sensorData.quaternion().y())) + "\n"
+                            +"Z: "+String.valueOf(df.format(sensorData.quaternion().z())) + "\n"
+                            +"W: "+String.valueOf(df.format(sensorData.quaternion().w())));
                  //   Log.d("Time", "stamp: " + sensorData.timestamp());
                     time_1 = time_2;
                     time_2 =sensorData.timestamp();
                     dt = (time_2-time_1)/1000;// in s
 
-                    yaw_1 = yaw_2;
-                    yaw_2 = sensorData.quaternion().zRotation();
-                    dYaw =yaw_2-yaw_1;
-                    //Log.d("time", "dt: " + dt);
-                    Log.d("yaw", "dYaw/dt: " + dYaw/dt);
+                    //quat shit
+                    if(first){
+                        initialOrientation= sensorData.quaternion();
+                        first = false;
+                    }//first is measured once then constant
+                    currentOrientation = sensorData.quaternion();
+                    Quaternion diff = quatDifference(initialOrientation, currentOrientation);
 
+                    Log.d("Quat", "current: " + currentOrientation);
+                    Log.d("Eul", "eul diff (x,y,z): "
+                            + diff.xRotation()*180/3.1415 + ", "
+                            +diff.yRotation()*180/3.1415 + ", "
+                            + diff.zRotation()*180/3.1415);//yaw diff from initial
 
+                    if(diff.zRotation()*180/3.1415 > 40){
+                        gyro.setText("Left");
 
+                    } else if(diff.zRotation()*180/3.1415 < -40){
+                        gyro.setText("Right");
+                    } else {
+                        gyro.setText("Center");
+                    }
 
                     //       Log.d("Game", "_________________________________");
 
@@ -253,8 +270,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case GYROSCOPE:
 //                     Handle gyroscope reading
-               gyro.setText(sensorData.vector().toString());
-
               //      Log.d("Gyroscope", sensorData.toString());
                     if (sensorData.vector() == null) {
                         Log.d("Gyroscope", "Q value null");
@@ -332,8 +347,29 @@ public class MainActivity extends AppCompatActivity {
 
 
     };//on sensor read
+    public Quaternion quatDifference( Quaternion quat2, Quaternion quat1){
+        //calculate and return quat1-quat2 diff
+        //ie go from quat2 to quat 1
+        double q1a = quat1.w();
+        double q1b = quat1.x();
+        double q1c = quat1.y();
+        double q1d = quat1.z();
 
+        Quaternion quat2C = quat2.inverted();
 
+        double q2a = quat2C.w();
+        double q2b= quat2C.x();
+        double q2c = quat2C.y();
+        double q2d = quat2C.z();
+
+        final double w = q1a * q2a - q1b * q2b - q1c * q2c - q1d * q2d;
+        final double x = q1a * q2b + q1b * q2a + q1c * q2d - q1d * q2c;
+        final double y = q1a * q2c - q1b * q2d + q1c * q2a + q1d * q2b;
+        final double z = q1a * q2d + q1b * q2c - q1c * q2b + q1d * q2a;
+
+        Quaternion quatOut = new Quaternion(x,y,z,w);
+        return quatOut;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

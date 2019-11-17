@@ -9,18 +9,20 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="88dp"
-        android:layout_height="27dp"
-        android:text="KMW Bose"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.108" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="161dp"
+            android:layout_height="61dp"
+            android:gravity="center"
+            android:text="KMW Bose"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.108" />
 
     <TextView
         android:id="@+id/textView4"
@@ -28,6 +30,7 @@
         android:layout_height="54dp"
         android:layout_marginStart="92dp"
         android:layout_marginTop="448dp"
+        android:gravity="center"
         android:text="@string/gyro"
         android:visibility="gone"
         android:textColor="#FFFFFF"
@@ -41,6 +44,7 @@
         android:layout_marginStart="104dp"
         android:layout_marginBottom="24dp"
         android:text="@string/gam"
+        android:gravity="center"
         android:visibility="gone"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,25 +62,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-    <ImageView
-        android:id="@+id/Listen"
-        android:layout_width="112dp"
-        android:layout_height="90dp"
-        android:background="#00FFFFFF"
-        android:visibility="gone"
-        app:srcCompat="@android:drawable/ic_menu_view"
-        tools:layout_editor_absoluteX="140dp"
-        tools:layout_editor_absoluteY="367dp" />
+        <ImageView
+            android:id="@+id/Listen"
+            android:layout_width="112dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="367dp"
+            android:background="#00FFFFFF"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_view" />
 
-    <ImageView
-        android:id="@+id/Mute"
-        android:layout_width="112dp"
-        android:layout_height="90dp"
-        android:background="#00FFFFFF"
-        android:visibility="gone"
-        app:srcCompat="@android:drawable/ic_lock_silent_mode"
-        tools:layout_editor_absoluteX="140dp"
-        tools:layout_editor_absoluteY="367dp" />
+        <ImageView
+            android:id="@+id/Mute"
+            android:layout_width="112dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="140dp"
+            android:layout_marginTop="367dp"
+            android:background="#00FFFFFF"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_lock_silent_mode" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

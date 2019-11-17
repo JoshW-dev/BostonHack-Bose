@@ -260,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
   */
 
                     Log.d("Drift", "count: " + driftedCount);
+                    Log.d("Drift", "yaw: " + yawDrift*180/3.1415);
 
                     yawDrift = diff.zRotation();//in rads
 
@@ -286,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    if(driftedCount >25 && yawDrift<20){
+                    if(driftedCount >25 && yawDrift*180/3.1415<20){
                         initialOrientation = currentOrientation;
                         driftedCount=0;
                     }

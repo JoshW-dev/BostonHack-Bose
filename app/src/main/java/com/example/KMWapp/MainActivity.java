@@ -145,12 +145,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onSensorDataRead(@NonNull SensorValue sensorData) {
+            TextView accel = findViewById(R.id.textView3);
+            TextView gyro = findViewById(R.id.textView4);
+            TextView gam = findViewById(R.id.textView5);
+            TextView rot = findViewById(R.id.textView6);
             switch (sensorData.sensorType()) {
                 case ACCELEROMETER:
 //                     Handle accelerometer reading
                     Log.d("Accelerometer", sensorData.toString());
-                    TextView textview = findViewById(R.id.textView3);
-                    textview.setText(sensorData.toString());
+                    accel.setText("accelerometer: " + sensorData.vector().toString());
                     if (sensorData.vector() == null) {
                         Log.d("Accelerometer", "vector value null");
                         return;
@@ -163,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case ROTATION_VECTOR:
                     // Handle gyroscope reading
-
+                    rot.setText("Rotation" + sensorData.vector().toString());
                     Log.d("Rotation", sensorData.toString());
                     if (sensorData.quaternion() == null) {
                         Log.d("Rotation", "Q value null");
@@ -184,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.d("Game", "x: " + sensorData.quaternion().xRotation());
 //                    Log.d("Game", "_________________________________");
 
-
+                    gam.setText("gam: " + sensorData.quaternion().yRotation());
                     Log.d("Game", "x: " + sensorData.quaternion().yRotation());
                     Log.d("Game", "_________________________________");
 
@@ -193,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case GYROSCOPE:
 //                     Handle gyroscope reading
-
+                    gyro.setText("gyro: " + sensorData.vector().toString());
                     Log.d("Gyroscope", sensorData.toString());
                     if (sensorData.vector() == null) {
                         Log.d("Gyroscope", "Q value null");

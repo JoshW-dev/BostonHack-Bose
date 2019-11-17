@@ -47,8 +47,12 @@ public class MainActivity extends AppCompatActivity {
     private static final int AUTO_CONNECT_TIMEOUT = 5; // In seconds, use 0 to disable automatic reconnection
     private static final int REQUEST_CODE_CONNECTOR = 1;
 
-    public int time_1 =0;
-    public int time_2 =0;
+    public double time_1 =0;
+    public double time_2 =0;
+    public double dt =0;
+    public double yaw_1 =0;
+    public double yaw_2 =0;
+    public double dYaw =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,10 +214,17 @@ public class MainActivity extends AppCompatActivity {
                     gam.setText("pitch:" +sensorData.quaternion().xRotation() + "\n"+
                          "roll:" +sensorData.quaternion().yRotation() + "\n"+
                          "yaw:" +sensorData.quaternion().zRotation() );
-                    Log.d("Time", "stamp: " + sensorData.timestamp());
+                 //   Log.d("Time", "stamp: " + sensorData.timestamp());
                     time_1 = time_2;
                     time_2 =sensorData.timestamp();
-                    Log.d("dt", "t2-t1: " + (time_2-time_1));
+                    dt = (time_2-time_1)/1000;// in s
+
+                    yaw_1 = yaw_2;
+                    yaw_2 = sensorData.quaternion().zRotation();
+                    dYaw =yaw_2-yaw_1;
+                    //Log.d("time", "dt: " + dt);
+                    Log.d("yaw", "dYaw/dt: " + dYaw/dt);
+
 
 
 

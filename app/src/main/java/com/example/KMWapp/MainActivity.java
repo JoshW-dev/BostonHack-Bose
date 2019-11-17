@@ -95,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void buttonOnClick2(View v) {
-
         Button button=(Button)v;
         ((Button) v).setText("clicked");
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, initVOl, 1);

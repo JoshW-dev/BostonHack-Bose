@@ -40,6 +40,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Button;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
@@ -49,12 +50,15 @@ public class MainActivity extends AppCompatActivity {
     private static final int AUTO_CONNECT_TIMEOUT = 5; // In seconds, use 0 to disable automatic reconnection
     private static final int REQUEST_CODE_CONNECTOR = 1;
 
+    DecimalFormat df = new DecimalFormat("#.####");
+
     public double time_1 =0;
     public double time_2 =0;
     public double dt =0;
     public double yaw_1 =0;
     public double yaw_2 =0;
     public double dYaw =0;
+    public double yawIntegral =0;
     public int initVOl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,9 +229,10 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.d("Game", "x: " + sensorData.quaternion().xRotation());
 //                    Log.d("Game", "_________________________________");
 
-                    gam.setText("pitch:" +sensorData.quaternion().xRotation() + "\n"+
-                         "roll:" +sensorData.quaternion().yRotation() + "\n"+
-                         "yaw:" +sensorData.quaternion().zRotation() );
+                    gam.setText("X: "+String.valueOf(df.format(sensorData.quaternion().x())) + "\n"
+                                    +"Y: "+String.valueOf(df.format(sensorData.quaternion().y())) + "\n"
+                            +"Z: "+String.valueOf(df.format(sensorData.quaternion().z())) + "\n"
+                            +"W: "+String.valueOf(df.format(sensorData.quaternion().w())));
                  //   Log.d("Time", "stamp: " + sensorData.timestamp());
                     time_1 = time_2;
                     time_2 =sensorData.timestamp();
@@ -237,9 +242,6 @@ public class MainActivity extends AppCompatActivity {
                     yaw_2 = sensorData.quaternion().zRotation();
                     dYaw =yaw_2-yaw_1;
                     //Log.d("time", "dt: " + dt);
-                    Log.d("yaw", "dYaw/dt: " + dYaw/dt);
-
-
 
 
                     //       Log.d("Game", "_________________________________");
@@ -287,7 +289,40 @@ public class MainActivity extends AppCompatActivity {
 
     };//on sensor read
 
+    public double[] quatConjugate(double[] quatIn){
+        double w = quatIn[0];
+        double x = quatIn[1];
+        double y = quatIn[2];
+        double z = quatIn[3];
+        double quatMag = Math.pow(w,2)+ Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2);
+        double[] quatOut = {w/quatMag, -x/quatMag, -y/quatMag, -z/quatMag};
+        return quatOut;
+    }
+    public double[] quatDifference(double[] quat1, double[] quat2){
+        //calculate and return quat2-quat1 diff
+        double q1a = quat1[0];
+        double q1b = quat1[1];
+        double q1c = quat1[2];
+        double q1d = quat1[3];
 
+        double[] quat2C = quatConjugate(quat2);
+
+        double q2a = quat2C[0];
+        double q2b= quat2C[1];
+        double q2c = quat2C[2];
+        double q2d = quat2C[3];
+
+        final double w = q1a * q2a - q1b * q2b - q1c * q2c - q1d * q2d;
+        final double x = q1a * q2b + q1b * q2a + q1c * q2d - q1d * q2c;
+        final double y = q1a * q2c - q1b * q2d + q1c * q2a + q1d * q2b;
+        final double z = q1a * q2d + q1b * q2c - q1c * q2b + q1d * q2a;
+
+        double[] quatOut = {w,x,y,z};
+        return quatOut;
+    }
+    public double [] quatToEuler(double[] quat){
+        
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

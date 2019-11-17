@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
     public Quaternion initialOrientation;
     public Quaternion currentOrientation;
     public boolean volumeToggle;
+    public View state = findViewById(R.id.textView4);
+    public View gesture = findViewById(R.id.textView5);
+    public View listen = findViewById(R.id.Listen);
+    public View mute = findViewById(R.id.Mute);
     //both quats
     public double yawDiff =0;
 
@@ -73,19 +77,10 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                connect();
-            }
-        });
         audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
     }
 
-    private void connect() {
+    public void connect(View v) {
         Set<SensorType> sensorTypeSet = new ArraySet<>(Arrays.asList(SensorType.ACCELEROMETER, SensorType.GYROSCOPE, SensorType.ROTATION_VECTOR, SensorType.GAME_ROTATION_VECTOR));
 
         SensorIntent sensorIntent = new SensorIntent(sensorTypeSet, Collections.singleton(SamplePeriod._320_MS));
@@ -95,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = DeviceConnectorActivity.newIntent(this, AUTO_CONNECT_TIMEOUT, sensorIntent, gestureIntent);
 
         startActivityForResult(intent, REQUEST_CODE_CONNECTOR);
+
+        gesture.setVisibility(View.VISIBLE);
+        state.setVisibility(View.VISIBLE);
+        listen.setVisibility(View.VISIBLE);
+
     }
     AudioManager audio;
 
@@ -259,21 +259,28 @@ public class MainActivity extends AppCompatActivity {
                             + diff.zRotation()*180/3.1415);//yaw diff from initial
 
                     if(diff.zRotation()*180/3.1415 > 40){
-                        gyro.setText("Left");
+                        gyro.setText("Aware");
                         if(volumeToggle == true){
                             buttonOnClick();
+                            listen.setVisibility(View.INVISIBLE);
+                            mute.setVisibility(View.VISIBLE);
                             volumeToggle = false;
+
                         }
                     } else if(diff.zRotation()*180/3.1415 < -40){
-                        gyro.setText("Right");
+                        gyro.setText("Aware");
                         if(volumeToggle == true){
                             buttonOnClick();
+                            listen.setVisibility(View.INVISIBLE);
+                            mute.setVisibility(View.VISIBLE);
                             volumeToggle = false;
                         }
                     } else {
-                        gyro.setText("Center");
+                        gyro.setText("Focused");
                         if(volumeToggle == false){
                             buttonOnClick2();
+                            listen.setVisibility(View.VISIBLE);
+                            mute.setVisibility(View.INVISIBLE);
                             volumeToggle = true;
                         }
                     }

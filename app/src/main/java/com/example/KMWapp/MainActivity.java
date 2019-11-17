@@ -7,6 +7,7 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.bose.blecore.BluetoothManager;
@@ -281,7 +282,6 @@ public class MainActivity extends AppCompatActivity {
                     }//first is measured once then constant
                     currentOrientation = sensorData.quaternion();
                     Quaternion diff = quatDifference(initialOrientation, currentOrientation);//quaternion rotation difference between initial orientation and current
-
 /*
                     Log.d("Quat", "current: " + currentOrientation);
                     Log.d("Eul", "eul diff (x,y,z): "
@@ -405,8 +405,12 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     audio.abandonAudioFocus(null);
-
                 }
+            }
+
+            if (gestureData.type().toString().equals("Head Shake")) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=dQw4w9WgXcQ")));
+                Log.i("Video", "Video Playing....");
             }
         }
 

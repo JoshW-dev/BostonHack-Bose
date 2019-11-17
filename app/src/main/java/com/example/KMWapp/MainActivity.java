@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int AUTO_CONNECT_TIMEOUT = 5; // In seconds, use 0 to disable automatic reconnection
     private static final int REQUEST_CODE_CONNECTOR = 1;
 
+    public int time_1 =0;
+    public int time_2 =0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -204,9 +207,15 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.d("Game", "x: " + sensorData.quaternion().xRotation());
 //                    Log.d("Game", "_________________________________");
 
-                 gam.setText("pitch:" +sensorData.quaternion().xRotation() + "\n"+
+                    gam.setText("pitch:" +sensorData.quaternion().xRotation() + "\n"+
                          "roll:" +sensorData.quaternion().yRotation() + "\n"+
                          "yaw:" +sensorData.quaternion().zRotation() );
+                    Log.d("Time", "stamp: " + sensorData.timestamp());
+                    time_1 = time_2;
+                    time_2 =sensorData.timestamp();
+                    Log.d("dt", "t2-t1: " + (time_2-time_1));
+
+
 
                     //       Log.d("Game", "_________________________________");
 

@@ -15,6 +15,7 @@ import com.bose.wearable.BoseWearable;
 import com.bose.wearable.BoseWearableException;
 import com.bose.wearable.sensordata.GestureData;
 import com.bose.wearable.sensordata.GestureIntent;
+import com.bose.wearable.sensordata.Quaternion;
 import com.bose.wearable.sensordata.SensorIntent;
 import com.bose.wearable.sensordata.SensorValue;
 import com.bose.wearable.services.wearablesensor.GestureConfiguration;
@@ -52,13 +53,15 @@ public class MainActivity extends AppCompatActivity {
 
     DecimalFormat df = new DecimalFormat("#.####");
 
+    public boolean first = true;
     public double time_1 =0;
     public double time_2 =0;
     public double dt =0;
-    public double yaw_1 =0;
-    public double yaw_2 =0;
-    public double dYaw =0;
-    public double yawIntegral =0;
+    public Quaternion initialOrientation;
+    public Quaternion currentOrientation;
+    //both quats
+    public double yawDiff =0;
+
     public int initVOl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,11 +241,20 @@ public class MainActivity extends AppCompatActivity {
                     time_2 =sensorData.timestamp();
                     dt = (time_2-time_1)/1000;// in s
 
-                    yaw_1 = yaw_2;
-                    yaw_2 = sensorData.quaternion().zRotation();
-                    dYaw =yaw_2-yaw_1;
-                    //Log.d("time", "dt: " + dt);
+                    //quat shit
+                    if(first){
+                        initialOrientation= sensorData.quaternion();
+                        first = false;
+                    }//first is measured once then constant
+                    currentOrientation = sensorData.quaternion();
+                    Quaternion inverted = currentOrientation.inverted();
 
+                    //Log.d("Quat", "invert: " + inverted);
+                    Quaternion quat2= new Quaternion( 0.408,-0.408, 0.816,0);
+                    Quaternion quat1= new Quaternion(0.577 ,0,0.577,0.577);
+
+                    Quaternion diff = quatDifference(quat1,quat2);
+                    Log.d("Quat", "diff: " + diff);
 
                     //       Log.d("Game", "_________________________________");
 
@@ -288,39 +300,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };//on sensor read
-
-    public double[] quatConjugate(double[] quatIn){
-        double w = quatIn[0];
-        double x = quatIn[1];
-        double y = quatIn[2];
-        double z = quatIn[3];
-        double quatMag = Math.pow(w,2)+ Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2);
-        double[] quatOut = {w/quatMag, -x/quatMag, -y/quatMag, -z/quatMag};
-        return quatOut;
-    }
-    public double[] quatDifference( double[] quat2, double[] quat1){
+    public Quaternion quatDifference( Quaternion quat2, Quaternion quat1){
         //calculate and return quat1-quat2 diff
         //ie go from quat2 to quat 1
-        double q1a = quat1[0];
-        double q1b = quat1[1];
-        double q1c = quat1[2];
-        double q1d = quat1[3];
+        double q1a = quat1.w();
+        double q1b = quat1.x();
+        double q1c = quat1.y();
+        double q1d = quat1.z();
 
-        double[] quat2C = quatConjugate(quat2);
+        Quaternion quat2C = quat2.inverted();
 
-        double q2a = quat2C[0];
-        double q2b= quat2C[1];
-        double q2c = quat2C[2];
-        double q2d = quat2C[3];
+        double q2a = quat2C.w();
+        double q2b= quat2C.x();
+        double q2c = quat2C.y();
+        double q2d = quat2C.z();
 
         final double w = q1a * q2a - q1b * q2b - q1c * q2c - q1d * q2d;
         final double x = q1a * q2b + q1b * q2a + q1c * q2d - q1d * q2c;
         final double y = q1a * q2c - q1b * q2d + q1c * q2a + q1d * q2b;
         final double z = q1a * q2d + q1b * q2c - q1c * q2b + q1d * q2a;
 
-        double[] quatOut = {w,x,y,z};
+        Quaternion quatOut = new Quaternion(x,y,z,w);
         return quatOut;
     }
+
     public double [] quatToEuler(double[] quat){
 
         double w = quat[0];

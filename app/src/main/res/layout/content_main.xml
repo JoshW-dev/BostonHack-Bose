@@ -29,4 +29,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gay"
+        tools:layout_editor_absoluteX="57dp"
+        tools:layout_editor_absoluteY="186dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="less gay"
+        tools:layout_editor_absoluteX="217dp"
+        tools:layout_editor_absoluteY="186dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

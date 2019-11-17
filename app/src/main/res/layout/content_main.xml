@@ -21,25 +21,6 @@
         app:layout_constraintVertical_bias="0.158" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="205dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="300dp"
-        android:text="@string/accel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/accelCaption"
-        android:layout_width="56dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="66dp"
-        android:text="Accel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-    <TextView
         android:id="@+id/textView4"
         android:layout_width="205dp"
         android:layout_height="54dp"
@@ -54,15 +35,14 @@
         android:layout_width="56dp"
         android:layout_height="54dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
-        android:text="Gyro"
+        android:text="Action"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/accelCaption" />
+        tools:layout_editor_absoluteY="405dp" />
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="204dp"
-        android:layout_height="79dp"
+        android:layout_width="208dp"
+        android:layout_height="136dp"
         android:layout_marginStart="108dp"
         android:layout_marginTop="504dp"
         android:text="@string/gam"
@@ -78,26 +58,6 @@
         android:text="Gam rot"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gyroCaption" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="201dp"
-        android:layout_height="81dp"
-        android:layout_marginStart="108dp"
-        android:layout_marginTop="596dp"
-        android:text="@string/rot"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/rotCaption"
-        android:layout_width="56dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
-        android:text="Rotation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gamCaption" />
 
     <Button
         android:id="@+id/button"

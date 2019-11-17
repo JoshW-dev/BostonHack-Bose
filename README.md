@@ -1,10 +1,17 @@
-# BostonHack-Bose
-Repo for BostonHack 2019 Bose AR spatial awareness idea
-Josh Wade, Dan Molyneaux, Spenny K
+# KWM-Bose
+Repo for BostonHack 2019 Bose AR spatial awareness and hands-free, voice-free control idea
 
-## Final Application is on the working_branch
+#### Josh Wade, Spencer Kelly, Dan Molyneaux
 
-## Notes:
+KWM Bose is an Android application created using Android studio and Bose AR SDK. The application is intented for bluetooth integradion with Bose's AR compatible devices (Bose Frames, Bose Headphones 700 and QC35 headphones II.) When started, the application will prompt the user to connect to a Bose bluetooth device, once connected, the orientation of the device is used to control volume.
+
+In awareness mode, a quick look left or right will lower the volume and turning back forward will return it to its original volume. This is intented to improve safety and spacial awareness for the user and to make the process of pausing music listening to talk to someone while working more seemless. Awareness mode can be toggled on and off by the user.
+
+Tilting your head to either side will raise or lower the android device volume. 
+
+
+
+### Reference:
 	https://bosedevs.gitbook.io/bose-ar-android-workshop/
 	
 ### Sensors:
@@ -18,3 +25,9 @@ Josh Wade, Dan Molyneaux, Spenny K
 	-Provides 4-dimension quaternion values
 	-Quaternions emitted by the SDK are unit quaternions with a norm of 1
 	-Unitless
+	
+### Quaternions
+
+Quaternions are 4 dimensional complex numbers that can be used to represent an orientation or rotation in 3d space (specifically pure quaternions.) Compared to using Euler angles, which is the more common method for representing an orientation, quaternions do have no discontinuities or singularities. They also don't allow for gimbal lock. 
+
+Quaternions were needed in this application to ensure that the difference in the initial and current orientation was continuous at any angle. 

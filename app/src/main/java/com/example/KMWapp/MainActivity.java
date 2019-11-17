@@ -112,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
     public void buttonOnClick() {
         initVOl = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
         int maxVol = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int minVol = (int) (maxVol*0.45);
+        int curVol = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int minVol = (int) (curVol*0.6);
         //Button button=(Button)v;
         //((Button) v).setText("clicked");
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, minVol, 0); //AudioManager.ADJUST_MUTE
@@ -275,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
                     yawDrift = diff.zRotation();//in rads
                     roll = currentOrientation.yRotation()*180/3.14159;//in deg
 
-                    Log.d("Current", "roll: " + roll);
                     if(yawDrift*180/3.1415 > 40){
                         driftedCount=0;
                         gyro.setText("Aware");
@@ -284,9 +284,7 @@ public class MainActivity extends AppCompatActivity {
                             listen.setVisibility(View.INVISIBLE);
                             mute.setVisibility(View.VISIBLE);
                             volumeToggle = false;
-
                         }
-
                     } else if(yawDrift*180/3.1415 < -40){
                         driftedCount=0;
                         gyro.setText("Aware");
@@ -307,19 +305,16 @@ public class MainActivity extends AppCompatActivity {
                             volumeToggle = true;
                         }
                     }
-
                     if(driftedCount >15 && yawDrift*180/3.1415<20){
                         initialOrientation = currentOrientation;
                         driftedCount=0;
                     }
-
                         if(roll>25){
                             audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, 1, 0); //raise volume
                         }
                         if(roll<-20){
                             audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, -1, 0); //raise volume
                       }
-
 
                     //       Log.d("Game", "_________________________________");
 

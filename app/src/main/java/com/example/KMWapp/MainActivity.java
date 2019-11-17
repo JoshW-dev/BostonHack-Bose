@@ -247,14 +247,14 @@ public class MainActivity extends AppCompatActivity {
                         first = false;
                     }//first is measured once then constant
                     currentOrientation = sensorData.quaternion();
-                    Quaternion inverted = currentOrientation.inverted();
+                    Quaternion diff = quatDifference(initialOrientation, currentOrientation);
 
-                    //Log.d("Quat", "invert: " + inverted);
-                    Quaternion quat2= new Quaternion( 0.408,-0.408, 0.816,0);
-                    Quaternion quat1= new Quaternion(0.577 ,0,0.577,0.577);
+                    Log.d("Quat", "current: " + currentOrientation);
+                    Log.d("Eul", "eul diff (x,y,z): "
+                            + diff.xRotation()*180/3.1415 + ", "
+                            +diff.yRotation()*180/3.1415 + ", "
+                            + diff.zRotation()*180/3.1415);//yaw diff from initial
 
-                    Quaternion diff = quatDifference(quat1,quat2);
-                    Log.d("Quat", "diff: " + diff);
 
                     //       Log.d("Game", "_________________________________");
 
@@ -322,25 +322,6 @@ public class MainActivity extends AppCompatActivity {
 
         Quaternion quatOut = new Quaternion(x,y,z,w);
         return quatOut;
-    }
-
-    public double [] quatToEuler(double[] quat){
-
-        double w = quat[0];
-        double x = quat[1];
-        double y = quat[2];
-        double z = quat[3];
-
-        double sqw = w*w;
-        double sqx = x*x;
-        double sqy = y*y;
-        double sqz = z*z;
-        double yaw = Math.atan2(2.0 * (x*y + z*w),(sqx - sqy - sqz + sqw));
-        double roll = Math.atan2(2.0 * (y*z + x*w),(-sqx - sqy + sqz + sqw));
-        double pitch= Math.asin(-2.0 * (x*z - y*w));
-
-        double[] eul = {roll, pitch, yaw};
-        return eul;
     }
 
     @Override

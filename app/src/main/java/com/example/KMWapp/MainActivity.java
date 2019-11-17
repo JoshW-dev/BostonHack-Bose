@@ -1,6 +1,7 @@
 package com.example.KMWapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 connect();
             }
         });
+        audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
     }
 
     private void connect() {

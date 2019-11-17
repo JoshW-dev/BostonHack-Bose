@@ -14,6 +14,6 @@ public class App extends Application {
         System.out.println("Started");
         super.onCreate();
         BoseWearable.configure(this, new Config.Builder().build());
-        AudioManager audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+
     }
 }

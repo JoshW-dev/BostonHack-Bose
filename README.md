@@ -26,4 +26,8 @@ Tilting your head to either side will raise or lower the android device volume.
 	-Quaternions emitted by the SDK are unit quaternions with a norm of 1
 	-Unitless
 	
+### Quaternions
 
+Quaternions are 4 dimensional complex numbers that can be used to represent an orientation or rotation in 3d space (specifically pure quaternions.) Compared to using Euler angles, which is the more common method for representing an orientation, quaternions do have no discontinuities or singularities. They also don't allow for gimbal lock. 
+
+Quaternions were needed in this application to ensure that the difference in the initial and current orientation was continuous at any angle. 

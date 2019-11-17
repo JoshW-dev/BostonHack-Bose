@@ -101,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
     public void buttonOnClick() {
         initVOl = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
         int maxVol = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int minVol = (int) (maxVol*0.10);
+        int minVol = (int) (maxVol*0.45);
         //Button button=(Button)v;
         //((Button) v).setText("clicked");
-        audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, minVol, 0); //AudioManager.ADJUST_MUTE
+        audio.setStreamVolume(AudioManager.STREAM_MUSIC, minVol, 0); //AudioManager.ADJUST_MUTE
 
     }
     public void buttonOnClick2() {
@@ -312,52 +312,15 @@ public class MainActivity extends AppCompatActivity {
         public void onGestureConfigurationError(@NonNull BoseWearableException wearableException) {
             // Gesture configuration change was rejected with the specified exception.
         }
-        int sampleRate = 8000;
-            try {
-            bufferSize = AudioRecord.getMinBufferSize(sampleRate, AudioFormat.CHANNEL_IN_MONO,
-                    AudioFormat.ENCODING_PCM_16BIT);
-            audio = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate,
-                    AudioFormat.CHANNEL_IN_MONO,
-                    AudioFormat.ENCODING_PCM_16BIT, bufferSize);
-        } catch (Exception e) {
-            android.util.Log.e("TrackingFlow", "Exception", e);
-        }
 
-        public MediaRecorder recorder = null;
-        public boolean isRecording = false;
-        public void startRecording() {
-            if (recorder == null) {
-                recorder = new MediaRecorder();
-                recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                recorder.setOutputFile("/dev/null");
-                recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                recorder.start();
-            }
-        }
 
-        public  decibelCheck(){
-            int maxAmp = recorder.getMaxAmplitude();
-            if (maxAmp > )
-        }
+
+
         @Override
         public void onGestureDataRead(@NonNull GestureData gestureData) {
             // Gesture received.
             Log.d("Gesture", "" + gestureData.toString());
-            if (gestureData.toString().equals("DoubleTap") &&  isRecording) {
-                System.out.println("side touched twice");
-                startRecording();
-                isRecording = true;
-                while(isRecording){
-                    Timer timer = new Timer();
-                    timer.schedule(new SayHello(), 0, 5000);
-                }
-            } else if (gestureData.toString().equals("DoubleTap") &&  !isRecording){
-                isRecording = false;
-                recorder.stop();
-                recorder.release();
-                recorder = null;
-                }
+
             }
 
 

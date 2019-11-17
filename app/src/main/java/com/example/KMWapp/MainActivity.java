@@ -36,6 +36,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.provider.MediaStore;
 import android.util.ArraySet;
 import android.util.Log;
 import android.view.View;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
     public int driftedCount =0;//keep track of small yaw drift to reset heading naturally
     public double yawDrift =0;
+    public double roll=0;
     public int initVOl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         gesture = findViewById(R.id.textView5);
         listen = findViewById(R.id.Listen);
         mute = findViewById(R.id.Mute);
+//        Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(photoIntent, );
     }
 
     public void connect(View v) {
@@ -109,10 +113,11 @@ public class MainActivity extends AppCompatActivity {
     public void buttonOnClick() {
         initVOl = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
         int maxVol = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int minVol = (int) (maxVol*0.45);
+        int curVol = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int minVol = (int) (curVol*0.6);
         //Button button=(Button)v;
         //((Button) v).setText("clicked");
-        audio.setStreamVolume(AudioManager.STREAM_MUSIC, minVol, 0); //AudioManager.ADJUST_MUTE
+        audio.setStreamVolume(AudioManager.STREAM_MUSIC, Math.min(minVol, (int)(maxVol*0.45)), 0); //AudioManager.ADJUST_MUTE
 
     }
     public void buttonOnClick2() {
@@ -268,10 +273,9 @@ public class MainActivity extends AppCompatActivity {
                             + diff.zRotation()*180/3.1415);//yaw diff from initial
   */
 
-                    Log.d("Drift", "count: " + driftedCount);
-                    Log.d("Drift", "yaw: " + yawDrift*180/3.1415);
 
                     yawDrift = diff.zRotation();//in rads
+                    roll = currentOrientation.yRotation()*180/3.14159;//in deg
 
                     if(yawDrift*180/3.1415 > 40){
                         driftedCount=0;
@@ -281,9 +285,7 @@ public class MainActivity extends AppCompatActivity {
                             listen.setVisibility(View.INVISIBLE);
                             mute.setVisibility(View.VISIBLE);
                             volumeToggle = false;
-
                         }
-
                     } else if(yawDrift*180/3.1415 < -40){
                         driftedCount=0;
                         gyro.setText("Aware");
@@ -304,11 +306,16 @@ public class MainActivity extends AppCompatActivity {
                             volumeToggle = true;
                         }
                     }
-
-                    if(driftedCount >25 && yawDrift*180/3.1415<20){
+                    if(driftedCount >15 && yawDrift*180/3.1415<20){
                         initialOrientation = currentOrientation;
                         driftedCount=0;
                     }
+                        if(roll>25){
+                            audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, 1, 0); //raise volume
+                        }
+                        if(roll<-20){
+                            audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, -1, 0); //raise volume
+                      }
 
                     //       Log.d("Game", "_________________________________");
 

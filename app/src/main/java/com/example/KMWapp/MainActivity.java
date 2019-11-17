@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case ROTATION_VECTOR:
                     // Handle gyroscope reading
-                //    rot.setText("Rotation" + sensorData.vector().toString());
+                   rot.setText(sensorData.quaternion().toString());
                   //  Log.d("Rotation", sensorData.toString());
                     if (sensorData.quaternion() == null) {
                         Log.d("Rotation", "Q value null");
@@ -204,16 +204,18 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.d("Game", "x: " + sensorData.quaternion().xRotation());
 //                    Log.d("Game", "_________________________________");
 
-                 //   gam.setText("gam: " + sensorData.quaternion().yRotation());
-             //       Log.d("Game", "x: " + sensorData.quaternion().yRotation());
-             //       Log.d("Game", "_________________________________");
+                 gam.setText("pitch:" +sensorData.quaternion().xRotation() + "\n"+
+                         "roll:" +sensorData.quaternion().yRotation() + "\n"+
+                         "yaw:" +sensorData.quaternion().zRotation() );
+
+                    //       Log.d("Game", "_________________________________");
 
 
 //                    Log.d("Game", "x: " + sensorData.quaternion().zRotation());
                     break;
                 case GYROSCOPE:
 //                     Handle gyroscope reading
-               //     gyro.setText("gyro: " + sensorData.vector().toString());
+               gyro.setText(sensorData.vector().toString());
 
               //      Log.d("Gyroscope", sensorData.toString());
                     if (sensorData.vector() == null) {

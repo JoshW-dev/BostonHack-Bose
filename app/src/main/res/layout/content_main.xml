@@ -61,8 +61,8 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="205dp"
-        android:layout_height="54dp"
+        android:layout_width="204dp"
+        android:layout_height="79dp"
         android:layout_marginStart="108dp"
         android:layout_marginTop="504dp"
         android:text="@string/gam"
@@ -81,8 +81,8 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="205dp"
-        android:layout_height="54dp"
+        android:layout_width="201dp"
+        android:layout_height="81dp"
         android:layout_marginStart="108dp"
         android:layout_marginTop="596dp"
         android:text="@string/rot"

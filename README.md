@@ -1,11 +1,13 @@
 # BostonHack-Bose
 Repo for BostonHack 2019 Bose AR spatial awareness idea
 
+## Current Goal:
+Control music volume with head tilting gestures
 
-##Notes:
+## Notes:
 	https://bosedevs.gitbook.io/bose-ar-android-workshop/
 	
-###Sensors:
+### Sensors:
 	Accelerometer
 	Gyroscope
 	magnetometer

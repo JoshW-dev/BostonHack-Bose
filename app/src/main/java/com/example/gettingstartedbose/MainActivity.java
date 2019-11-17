@@ -33,6 +33,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,14 +50,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        TextView textview = findViewById(R.id.textView3);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
                 connect();
             }
         });
@@ -151,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
                 case ACCELEROMETER:
 //                     Handle accelerometer reading
                     Log.d("Accelerometer", sensorData.toString());
-
+                    TextView textview = findViewById(R.id.textView3);
+                    textview.setText(sensorData.toString());
                     if (sensorData.vector() == null) {
                         Log.d("Accelerometer", "vector value null");
                         return;

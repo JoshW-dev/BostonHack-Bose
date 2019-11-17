@@ -322,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
                                 volumeToggle = true;
                             }
                         }
-                        if (driftedCount > 6 && yawDrift * 180 / 3.1415 < 30) {
+                        if (driftedCount > 4 && yawDrift * 180 / 3.1415 < 30) {
                             initialOrientation = currentOrientation;
                             driftedCount = 0;
                         }

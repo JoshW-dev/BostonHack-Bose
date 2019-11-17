@@ -24,38 +24,81 @@
         android:id="@+id/textView3"
         android:layout_width="205dp"
         android:layout_height="54dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="316dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="300dp"
         android:text="@string/accel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/accelCaption"
+        android:layout_width="56dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="66dp"
+        android:text="Accel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
     <TextView
         android:id="@+id/textView4"
         android:layout_width="205dp"
         android:layout_height="54dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="416dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="404dp"
         android:text="@string/gyro"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gyroCaption"
+        android:layout_width="56dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:text="Gyro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accelCaption" />
+
     <TextView
         android:id="@+id/textView5"
         android:layout_width="205dp"
         android:layout_height="54dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="516dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="504dp"
         android:text="@string/gam"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/gamCaption"
+        android:layout_width="56dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="46dp"
+        android:text="Gam rot"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gyroCaption" />
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="205dp"
         android:layout_height="54dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="616dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="596dp"
         android:text="@string/rot"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rotCaption"
+        android:layout_width="56dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Rotation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gamCaption" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -75,6 +118,8 @@
         android:text="volume up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

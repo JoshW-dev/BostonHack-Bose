@@ -321,7 +321,22 @@ public class MainActivity extends AppCompatActivity {
         return quatOut;
     }
     public double [] quatToEuler(double[] quat){
-        
+
+        double w = quat[0];
+        double x = quat[1];
+        double y = quat[2];
+        double z = quat[3];
+
+        double sqw = w*w;
+        double sqx = x*x;
+        double sqy = y*y;
+        double sqz = z*z;
+        double yaw = Math.atan2(2.0 * (x*y + z*w),(sqx - sqy - sqz + sqw));
+        double roll = Math.atan2(2.0 * (y*z + x*w),(-sqx - sqy + sqz + sqw));
+        double pitch= Math.asin(-2.0 * (x*z - y*w));
+
+        double[] eul = {roll, pitch, yaw};
+        return eul;
     }
 
     @Override

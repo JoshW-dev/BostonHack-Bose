@@ -63,7 +63,8 @@
             android:background="@drawable/button_bg_rounded_corners"
             android:fontFamily="@font/roboto"
             android:onClick="connect"
-            android:text="connect" />
+            android:text="connect"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/disable"
@@ -75,7 +76,8 @@
             android:background="@drawable/button_bg_rounded_corners"
             android:fontFamily="@font/roboto"
             android:onClick="buttonOnClickAwareness"
-            android:text="Disable" />
+            android:text="Disable"
+            android:textSize="18sp" />
     </androidx.cardview.widget.CardView>
 
 

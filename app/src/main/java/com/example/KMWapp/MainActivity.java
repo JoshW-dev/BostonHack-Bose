@@ -42,6 +42,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -68,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean volumeToggle;
     public View state;
     public View gesture;
-    public View listen;
-    public View mute;
+    public ImageView listen;
+    public ImageView mute;
     //both quats
     public double yawDiff =0;
 

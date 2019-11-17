@@ -9,13 +9,28 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="360dp"
+        android:layout_height="89dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginEnd="1dp"
+        android:fadingEdge="vertical"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
             android:id="@+id/textView9"
             android:layout_width="161dp"
             android:layout_height="61dp"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="KMW Bose"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -24,18 +39,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.108" />
 
+    </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="205dp"
         android:layout_height="54dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="448dp"
+        android:layout_marginTop="350dp"
         android:gravity="center"
         android:text="@string/gyro"
-        android:visibility="gone"
         android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
 
     <TextView
         android:id="@+id/textView5"
@@ -43,48 +62,80 @@
         android:layout_height="92dp"
         android:layout_marginStart="104dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/gam"
         android:gravity="center"
-        android:visibility="gone"
+        android:text="@string/gam"
         android:textColor="#FFFFFF"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/connect"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="124dp"
+        android:background="@drawable/button_bg_rounded_corners"
+        android:onClick="connect"
+        android:text="connect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+
+    <ImageView
+        android:id="@+id/Listen"
+        android:layout_width="323dp"
+        android:layout_height="288dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="380dp"
+        android:background="#00FFFFFF"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_view" />
+
+    <ImageView
+        android:id="@+id/Mute"
+        android:layout_width="326dp"
+        android:layout_height="281dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="380dp"
+        android:background="#00FFFFFF"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_silent_mode" />
+
+    <Button
+        android:id="@+id/disable"
+        android:layout_width="145dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="124dp"
+        android:background="@drawable/button_bg_rounded_corners"
+        android:onClick="buttonOnClickAwareness"
+        android:text="Disable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connect" />
+
+    <ImageView
+        android:id="@+id/minus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="69dp"
-        android:background="#FFFFFF"
-        android:onClick="connect"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        android:layout_marginTop="168dp"
+        android:layout_marginEnd="35dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:srcCompat="@android:drawable/button_onoff_indicator_off" />
 
-        <ImageView
-            android:id="@+id/Listen"
-            android:layout_width="112dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="367dp"
-            android:background="#00FFFFFF"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_view" />
-
-        <ImageView
-            android:id="@+id/Mute"
-            android:layout_width="112dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="367dp"
-            android:background="#00FFFFFF"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_lock_silent_mode" />
-
-
+    <ImageView
+        android:id="@+id/add"
+        android:layout_width="80dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="134dp"
+        android:layout_marginEnd="17dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2"
+        app:srcCompat="@android:drawable/ic_menu_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>

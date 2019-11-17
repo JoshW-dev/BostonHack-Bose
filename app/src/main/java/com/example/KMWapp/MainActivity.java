@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
     public View gesture;
     public ImageView listen;
     public ImageView mute;
+    public Button disable;
+    public ImageView add;
+    public ImageView subtract;
     //both quats
     public double yawDiff =0;
 
@@ -84,11 +87,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-
+        disable = (Button)findViewById(R.id.disable);
         state = findViewById(R.id.textView4);
         gesture = findViewById(R.id.textView5);
         listen = findViewById(R.id.Listen);
         mute = findViewById(R.id.Mute);
+        add = findViewById(R.id.add);
+        subtract = findViewById(R.id.minus);
 //        Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //        startActivityForResult(photoIntent, );
     }
@@ -126,8 +131,14 @@ public class MainActivity extends AppCompatActivity {
         //((Button) v).setText("clicked");
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, initVOl, 1);
     }
-    public void buttonOnClickAwareness() {
+    public void buttonOnClickAwareness(View v) {
         awareMode =! awareMode;
+
+        if(awareMode == false){
+            disable.setText("Enable");
+        } else {
+            disable.setText("Disable");
+        }
     }
 
     @Override
@@ -281,46 +292,67 @@ public class MainActivity extends AppCompatActivity {
 
                     yawDrift = diff.zRotation();//in rads
                     roll = currentOrientation.yRotation()*180/3.14159;//in deg
-
-                    if(yawDrift*180/3.1415 > 40){
-                        driftedCount=0;
-                        gyro.setText("Aware");
-                        if(volumeToggle == true){
-                            buttonOnClick();
-                            listen.setVisibility(View.INVISIBLE);
-                            mute.setVisibility(View.VISIBLE);
-                            volumeToggle = false;
+                    if(awareMode) {
+                        if (yawDrift * 180 / 3.1415 > 40) {
+                            driftedCount = 0;
+                            gyro.setText("Aware");
+                            if (volumeToggle == true) {
+                                buttonOnClick();
+                                listen.setVisibility(View.INVISIBLE);
+                                mute.setVisibility(View.VISIBLE);
+                                volumeToggle = false;
+                            }
+                        } else if (yawDrift * 180 / 3.1415 < -40) {
+                            driftedCount = 0;
+                            gyro.setText("Aware");
+                            if (volumeToggle == true) {
+                                buttonOnClick();
+                                listen.setVisibility(View.INVISIBLE);
+                                mute.setVisibility(View.VISIBLE);
+                                volumeToggle = false;
+                            }
+                        } else {
+                            gyro.setText("Focused");
+                            driftedCount++;
+                            if (volumeToggle == false) {
+                                buttonOnClick2();
+                                listen.setVisibility(View.VISIBLE);
+                                mute.setVisibility(View.INVISIBLE);
+                                volumeToggle = true;
+                            }
                         }
-                    } else if(yawDrift*180/3.1415 < -40){
-                        driftedCount=0;
-                        gyro.setText("Aware");
-                        if(volumeToggle == true){
-                            buttonOnClick();
-                            listen.setVisibility(View.INVISIBLE);
-                            mute.setVisibility(View.VISIBLE);
-                            volumeToggle = false;
+                        if (driftedCount > 15 && yawDrift * 180 / 3.1415 < 20) {
+                            initialOrientation = currentOrientation;
+                            driftedCount = 0;
                         }
-                    } else {
-                        gyro.setText("Focused");
-                        driftedCount++;
-                        gyro.setText("Center");
-                        if(volumeToggle == false){
-                            buttonOnClick2();
-                            listen.setVisibility(View.VISIBLE);
-                            mute.setVisibility(View.INVISIBLE);
-                            volumeToggle = true;
-                        }
-                    }
-                    if(driftedCount >15 && yawDrift*180/3.1415<20){
-                        initialOrientation = currentOrientation;
-                        driftedCount=0;
                     }
                         if(roll>25){
                             audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, 1, 0); //raise volume
-                        }
+                            if(subtract.getVisibility() != View.INVISIBLE){
+                                subtract.setVisibility(View.INVISIBLE);
+                            }
+                            if(add.getVisibility() != View.VISIBLE) {
+                                add.setVisibility(View.VISIBLE);
+                            }
+
+                        }else
                         if(roll<-20){
                             audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, -1, 0); //raise volume
-                      }
+                            if(add.getVisibility() != View.INVISIBLE){
+                                add.setVisibility(View.INVISIBLE);
+                            }
+                            if(subtract.getVisibility() != View.VISIBLE) {
+                                subtract.setVisibility(View.VISIBLE);
+                            }
+
+                        }else {
+                            if(add.getVisibility() != View.INVISIBLE){
+                                add.setVisibility(View.INVISIBLE);
+                            }
+                            if(subtract.getVisibility() != View.INVISIBLE){
+                                subtract.setVisibility(View.INVISIBLE);
+                            }
+                        }
 
                     //       Log.d("Game", "_________________________________");
 

@@ -36,7 +36,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Button
+import android.widget.Button;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -169,8 +169,8 @@ public class MainActivity extends AppCompatActivity {
             switch (sensorData.sensorType()) {
                 case ACCELEROMETER:
 //                     Handle accelerometer reading
-                    Log.d("Accelerometer", sensorData.toString());
-                    accel.setText("accelerometer: " + sensorData.vector().toString());
+                 //   Log.d("Accelerometer", sensorData.toString());
+                    accel.setText(sensorData.vector().toString());
                     if (sensorData.vector() == null) {
                         Log.d("Accelerometer", "vector value null");
                         return;
@@ -183,8 +183,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case ROTATION_VECTOR:
                     // Handle gyroscope reading
-                    rot.setText("Rotation" + sensorData.vector().toString());
-                    Log.d("Rotation", sensorData.toString());
+                //    rot.setText("Rotation" + sensorData.vector().toString());
+                  //  Log.d("Rotation", sensorData.toString());
                     if (sensorData.quaternion() == null) {
                         Log.d("Rotation", "Q value null");
                         return;
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 //                    Log.d("Game", "x: " + sensorData.quaternion().xRotation());
 //                    Log.d("Game", "_________________________________");
 
-                    gam.setText("gam: " + sensorData.quaternion().yRotation());
+                 //   gam.setText("gam: " + sensorData.quaternion().yRotation());
              //       Log.d("Game", "x: " + sensorData.quaternion().yRotation());
              //       Log.d("Game", "_________________________________");
 
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case GYROSCOPE:
 //                     Handle gyroscope reading
-                    gyro.setText("gyro: " + sensorData.vector().toString());
+               //     gyro.setText("gyro: " + sensorData.vector().toString());
 
               //      Log.d("Gyroscope", sensorData.toString());
                     if (sensorData.vector() == null) {

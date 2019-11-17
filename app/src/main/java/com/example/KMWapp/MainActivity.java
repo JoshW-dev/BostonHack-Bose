@@ -252,11 +252,13 @@ public class MainActivity extends AppCompatActivity {
                     currentOrientation = sensorData.quaternion();
                     Quaternion diff = quatDifference(initialOrientation, currentOrientation);
 
+                    /*
                     Log.d("Quat", "current: " + currentOrientation);
                     Log.d("Eul", "eul diff (x,y,z): "
                             + diff.xRotation()*180/3.1415 + ", "
                             +diff.yRotation()*180/3.1415 + ", "
                             + diff.zRotation()*180/3.1415);//yaw diff from initial
+                    */
 
                     if(diff.zRotation()*180/3.1415 > 40){
                         gyro.setText("Left");
@@ -320,6 +322,11 @@ public class MainActivity extends AppCompatActivity {
         public void onGestureDataRead(@NonNull GestureData gestureData) {
             // Gesture received.
             Log.d("Gesture", "" + gestureData.toString());
+            if(gestureData.type().toString().equals("Double Tap")){
+                initialOrientation = currentOrientation;
+                Log.d("Heading", ""+ "reset to current");
+
+            }
 
             }
 

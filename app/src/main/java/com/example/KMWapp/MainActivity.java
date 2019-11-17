@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     DecimalFormat df = new DecimalFormat("#.####");
 
     public boolean first = true;
+    public boolean awareMode = true;
     public double time_1 =0;
     public double time_2 =0;
     public double dt =0;
@@ -124,6 +125,10 @@ public class MainActivity extends AppCompatActivity {
         //((Button) v).setText("clicked");
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, initVOl, 1);
     }
+    public void buttonOnClickAwareness() {
+        awareMode =! awareMode;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 

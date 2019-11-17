@@ -176,7 +176,8 @@ public class MainActivity extends AppCompatActivity {
                         .gestureEnabled(GestureType.DOUBLE_TAP, true)
                         .gestureEnabled(GestureType.SINGLE_TAP, true)
                         .gestureEnabled(GestureType.HEAD_NOD, true)
-                        .gestureEnabled(GestureType.HEAD_SHAKE, true);
+                        .gestureEnabled(GestureType.HEAD_SHAKE, true)
+                        .gestureEnabled(GestureType.TOUCH_AND_HOLD, true);
 
 
                 wearableDevice.changeGestureConfiguration(config);
@@ -321,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
                                 volumeToggle = true;
                             }
                         }
-                        if (driftedCount > 15 && yawDrift * 180 / 3.1415 < 20) {
+                        if (driftedCount > 6 && yawDrift * 180 / 3.1415 < 30) {
                             initialOrientation = currentOrientation;
                             driftedCount = 0;
                         }
@@ -394,13 +395,20 @@ public class MainActivity extends AppCompatActivity {
         public void onGestureDataRead(@NonNull GestureData gestureData) {
             // Gesture received.
             Log.d("Gesture", "" + gestureData.toString());
-            if(gestureData.type().toString().equals("Double Tap")){
+            if (gestureData.type().toString().equals("Double Tap")) {
                 initialOrientation = currentOrientation;
-                Log.d("Heading", ""+ "reset to current");
+                Log.d("Heading", "" + "reset to current");
             }
+            if (gestureData.type().toString().equals("Head Nod")) {
+                if (audio.isMusicActive()) {
+                    audio.requestAudioFocus(null,AudioManager.STREAM_MUSIC,AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+                }
+                else{
+                    audio.abandonAudioFocus(null);
 
+                }
             }
-
+        }
 
     };//on sensor read
     public Quaternion quatDifference( Quaternion quat2, Quaternion quat1){

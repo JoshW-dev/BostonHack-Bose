@@ -100,9 +100,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void buttonOnClick() {
         initVOl = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+        int maxVol = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int minVol = (int) (maxVol*0.10);
         //Button button=(Button)v;
         //((Button) v).setText("clicked");
-        audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
+        audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, minVol, 0); //AudioManager.ADJUST_MUTE
 
     }
     public void buttonOnClick2() {

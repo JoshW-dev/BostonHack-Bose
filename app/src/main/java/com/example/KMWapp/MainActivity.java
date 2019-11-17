@@ -1,4 +1,4 @@
-package com.example.gettingstartedbose;
+package com.example.KMWapp;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 //                     Handle accelerometer reading
                     Log.d("Accelerometer", sensorData.toString());
                     TextView textview = findViewById(R.id.textView3);
-                    textview.setText(sensorData.toString());
+                    textview.setText(sensorData.vector().toString());
                     if (sensorData.vector() == null) {
                         Log.d("Accelerometer", "vector value null");
                         return;

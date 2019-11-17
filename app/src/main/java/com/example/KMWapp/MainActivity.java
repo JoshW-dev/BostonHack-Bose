@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public double yaw_1 =0;
     public double yaw_2 =0;
     public double dYaw =0;
-
+    public int initVOl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -86,10 +86,19 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_CODE_CONNECTOR);
     }
     AudioManager audio;
+
     public void buttonOnClick(View v) {
+        initVOl = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
         Button button=(Button)v;
         ((Button) v).setText("clicked");
         audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_MUTE, 0);
+
+    }
+    public void buttonOnClick2(View v) {
+
+        Button button=(Button)v;
+        ((Button) v).setText("clicked");
+        audio.setStreamVolume(AudioManager.STREAM_MUSIC, initVOl, 1);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

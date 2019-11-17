@@ -3,6 +3,7 @@ package com.example.KMWapp;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
@@ -36,11 +37,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.provider.MediaStore;
 import android.util.ArraySet;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -74,17 +77,20 @@ public class MainActivity extends AppCompatActivity {
     public int driftedCount =0;//keep track of small yaw drift to reset heading naturally
     public double yawDrift =0;
     public int initVOl;
+    public ImageView imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         audio = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
-
         state = findViewById(R.id.textView4);
         gesture = findViewById(R.id.textView5);
         listen = findViewById(R.id.Listen);
         mute = findViewById(R.id.Mute);
+        Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(photoIntent,0);
     }
 
     public void connect(View v) {
@@ -103,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
         listen.setVisibility(View.VISIBLE);
 
     }
+    public void cameraButtonClick(){
+        
+    }
+
     AudioManager audio;
 
     public void buttonOnClick() {
@@ -168,6 +178,11 @@ public class MainActivity extends AppCompatActivity {
                         .enableSensor(SensorType.ROTATION_VECTOR, samplePeriod)
                         .enableSensor(SensorType.GAME_ROTATION_VECTOR, samplePeriod);
                 wearableDevice.changeSensorConfiguration(configuration);
+
+                super.onActivityResult(requestCode,resultCode,data);
+                Bitmap photo = (Bitmap)data.getExtras().get("data");
+                imageView.setImageBitmap(photo);
+
             } else if (resultCode == DeviceConnectorActivity.RESULT_SCAN_ERROR) {
 //                ScanError scanError = (ScanError) data.getSerializableExtra(DeviceConnectorActivity.FAILURE_REASON);
 
@@ -353,7 +368,9 @@ public class MainActivity extends AppCompatActivity {
                 initialOrientation = currentOrientation;
                 Log.d("Heading", ""+ "reset to current");
             }
+            if(gestureData.type().toString().equals("HEAD_NOD")){
 
+            }
             }
 
 

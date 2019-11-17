@@ -1,8 +1,8 @@
 # BostonHack-Bose
 Repo for BostonHack 2019 Bose AR spatial awareness idea
+Josh Wade, Dan Molyneaux, Spenny K
 
-## Current Goal:
-Control music volume with head tilting gestures
+## Final Application is on the working_branch
 
 ## Notes:
 	https://bosedevs.gitbook.io/bose-ar-android-workshop/

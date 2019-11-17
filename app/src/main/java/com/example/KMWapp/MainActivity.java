@@ -298,8 +298,9 @@ public class MainActivity extends AppCompatActivity {
         double[] quatOut = {w/quatMag, -x/quatMag, -y/quatMag, -z/quatMag};
         return quatOut;
     }
-    public double[] quatDifference(double[] quat1, double[] quat2){
-        //calculate and return quat2-quat1 diff
+    public double[] quatDifference( double[] quat2, double[] quat1){
+        //calculate and return quat1-quat2 diff
+        //ie go from quat2 to quat 1
         double q1a = quat1[0];
         double q1b = quat1[1];
         double q1c = quat1[2];

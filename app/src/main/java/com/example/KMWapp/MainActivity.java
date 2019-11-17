@@ -64,9 +64,8 @@ public class MainActivity extends AppCompatActivity {
     public Quaternion initialOrientation;
     public Quaternion currentOrientation;
     public boolean volumeToggle;
-    //both quats
-    public double yawDiff =0;
-
+    public int driftedCount =0;//keep track of small yaw drift to reset heading naturally
+    public double yawDrift =0;
     public int initVOl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -250,34 +249,46 @@ public class MainActivity extends AppCompatActivity {
                         volumeToggle = true;
                     }//first is measured once then constant
                     currentOrientation = sensorData.quaternion();
-                    Quaternion diff = quatDifference(initialOrientation, currentOrientation);
+                    Quaternion diff = quatDifference(initialOrientation, currentOrientation);//quaternion rotation difference between initial orientation and current
 
-                    /*
+/*
                     Log.d("Quat", "current: " + currentOrientation);
                     Log.d("Eul", "eul diff (x,y,z): "
                             + diff.xRotation()*180/3.1415 + ", "
                             +diff.yRotation()*180/3.1415 + ", "
                             + diff.zRotation()*180/3.1415);//yaw diff from initial
-                    */
+  */
 
-                    if(diff.zRotation()*180/3.1415 > 40){
+                    Log.d("Drift", "count: " + driftedCount);
+
+                    yawDrift = diff.zRotation();//in rads
+
+                    if(yawDrift*180/3.1415 > 40){
+                        driftedCount=0;
                         gyro.setText("Left");
                         if(volumeToggle == true){
                             buttonOnClick();
                             volumeToggle = false;
                         }
-                    } else if(diff.zRotation()*180/3.1415 < -40){
+                    } else if(yawDrift*180/3.1415 < -40){
+                        driftedCount=0;
                         gyro.setText("Right");
                         if(volumeToggle == true){
                             buttonOnClick();
                             volumeToggle = false;
                         }
                     } else {
+                        driftedCount++;
                         gyro.setText("Center");
                         if(volumeToggle == false){
                             buttonOnClick2();
                             volumeToggle = true;
                         }
+                    }
+
+                    if(driftedCount >25 && yawDrift<20){
+                        initialOrientation = currentOrientation;
+                        driftedCount=0;
                     }
 
                     //       Log.d("Game", "_________________________________");
@@ -316,8 +327,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
-
         @Override
         public void onGestureDataRead(@NonNull GestureData gestureData) {
             // Gesture received.
@@ -325,7 +334,6 @@ public class MainActivity extends AppCompatActivity {
             if(gestureData.type().toString().equals("Double Tap")){
                 initialOrientation = currentOrientation;
                 Log.d("Heading", ""+ "reset to current");
-
             }
 
             }

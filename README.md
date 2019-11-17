@@ -31,3 +31,25 @@ Tilting your head to either side will raise or lower the android device volume.
 Quaternions are 4 dimensional complex numbers that can be used to represent an orientation or rotation in 3d space (specifically pure quaternions.) Compared to using Euler angles, which is the more common method for representing an orientation, quaternions do have no discontinuities or singularities. They also don't allow for gimbal lock. 
 
 Quaternions were needed in this application to ensure that the difference in the initial and current orientation was continuous at any angle. 
+
+# Functionallity:
+	Play/Pause:
+		Using the built in "head nod" function, music can be started and stop with a small head nod.
+	Awareness Mode:
+		By rotating your head at a specific speed to the left or right shoulder, music volume will be lowered to a certain level 		 so you can more easily be aware of your surroundings. Essecially usefull when biking or running and need to maintain. 			vigilance.
+	Volume Up/Down:
+		Rolling your head to your left shoulder lowers volume and rolling to the right increases the volume. 
+	Skip Songs:
+		Using the built in "head shake" function, the user can skip to the next song.
+	Easy to Use interface:
+		User can disable some features if the want to limit sensor input.
+# Future Goals:
+	Go Pro Incorporation:
+		Use a user input to set off video recording and picture taking on a Go Pro while doing an activity (Biking, boarding, 			etc...)
+	Object Detection using microphones:
+		Allow users to be warned when the microphones pick up incoming objects to keep them even more aware of impending
+		dangers.
+	User Customized Input:
+		Let users customize some gestures to let them easily maneuver their music.
+		
+	

@@ -44,10 +44,11 @@ Quaternions were needed in this application to ensure that the difference in the
 		![tiltToDown](tiltToDown.gif)![tilttoUP](/tilttoUP.gif)
 	Skip Songs:
 		Using the built in "head shake" function, the user can skip to the next song.
-		![headShake](https://media.giphy.com/media/ZFulMwFYT1EYcXktX0/giphy.gif)
+		
 	Easy to Use interface:
 		User can disable some features if the want to limit sensor input.
 		![tapToFocus](/tapToFocus.gif)
+![](https://media.giphy.com/media/ZFulMwFYT1EYcXktX0/giphy.gif)
 # Future Goals:
 	Go Pro Incorporation:
 		Use a user input to set off video recording and picture taking on a Go Pro while doing an activity (Biking, boarding, 			etc...)

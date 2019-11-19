@@ -35,19 +35,19 @@ Quaternions were needed in this application to ensure that the difference in the
 # Functionallity:
 	Play/Pause:
 		Using the built in "head nod" function, music can be started and stop with a small head nod.
-		![Alt Text](/nodToPause.gif)
+		![nodToPause](/nodToPause.gif)
 	Awareness Mode:
 		By rotating your head at a specific speed to the left or right shoulder, music volume will be lowered to a 			certain level so you can more easily be aware of your surroundings. Especially useful when biking or running and 		 need to maintain vigilance.
-		![Alt Text](/awarenessMode.gif)
+		![awarenessMode](/awarenessMode.gif)
 	Volume Up/Down:
 		Rolling your head to your left shoulder lowers volume and rolling to the right increases the volume. 
-		![Alt Text](/tiltToDown.gif)![Alt Text](/tilttoUP.gif)
+		![tiltToDown](/tiltToDown.gif)![tilttoUP](/tilttoUP.gif)
 	Skip Songs:
 		Using the built in "head shake" function, the user can skip to the next song.
-		![Alt Text](/headShake.gif)
+		![headShake](/headShake.gif)
 	Easy to Use interface:
 		User can disable some features if the want to limit sensor input.
-		![Alt Text](/tapToFocus.gif)
+		![tapToFocus](/tapToFocus.gif)
 # Future Goals:
 	Go Pro Incorporation:
 		Use a user input to set off video recording and picture taking on a Go Pro while doing an activity (Biking, boarding, 			etc...)

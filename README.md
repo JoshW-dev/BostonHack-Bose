@@ -41,7 +41,7 @@ Quaternions were needed in this application to ensure that the difference in the
 		![awarenessMode](/awarenessMode.gif)
 	Volume Up/Down:
 		Rolling your head to your left shoulder lowers volume and rolling to the right increases the volume. 
-		![tiltToDown](/tiltToDown.gif)![tilttoUP](/tilttoUP.gif)
+		![tiltToDown](tiltToDown.gif)![tilttoUP](/tilttoUP.gif)
 	Skip Songs:
 		Using the built in "head shake" function, the user can skip to the next song.
 		![headShake](/headShake.gif)

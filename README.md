@@ -46,7 +46,7 @@ Quaternions were needed in this application to ensure that the difference in the
 	Volume Up/Down:
 		Rolling your head to your left shoulder lowers volume and rolling to the right increases the volume. 
 		
-![tiltToDown](/tiltToDown.gif) | ![tilttoUP](/tilttoUP.gif)
+![tiltToDown](/tiltToDown.gif) | ![tilttoUP](/tiltToUP.gif)
 
 	Skip Songs:
 		Using the built in "head shake" function, the user can go to a youtube link of Rick Roll.

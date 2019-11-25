@@ -38,6 +38,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.provider.MediaStore;
+import android.speech.tts.TextToSpeech;
 import android.util.ArraySet;
 import android.util.Log;
 import android.view.View;
@@ -50,8 +51,10 @@ import android.widget.Button;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Set;
 import java.util.Timer;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -81,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
     public int driftedCount =0;//keep track of small yaw drift to reset heading naturally
     public double yawDrift =0;
     public double roll=0;
-    public int initVOl;
+    public int initVol;
+    TextToSpeech t1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -97,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
         subtract = findViewById(R.id.minus);
 //        Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //        startActivityForResult(photoIntent, );
+        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    t1.setLanguage(Locale.UK);
+                }
+            }
+        });
     }
 
     public void connect(View v) {
@@ -116,12 +128,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
     AudioManager audio;
+    public int i=0;
+    public String[] recipeList={"","To the grated potatoes, add 1 grated onion, " +
+            "2 lightly beaten eggs and 2 tablespoons breadcrumbs (or matzo meal); " +
+            "substitute neutral oil for butter. (Be liberal with the oil.)",
+            "Spoon the mixture into the oil to form pancakes; fry until brown and crisp on both sides",
+            "Serve with sour cream and applesauce"};
+
+    public void forwardMove(View v){
+        try{
+            i++;
+            System.out.println(recipeList[i]);
+            t1.speak(recipeList[i], TextToSpeech.QUEUE_FLUSH, null,null);
+        }catch(Exception e){
+            String errorMsg = "There are no more instructions.";
+            System.out.println(errorMsg);
+            t1.speak(errorMsg, TextToSpeech.QUEUE_FLUSH, null,null);
+        }
+    }
+    public void reverseMove(View v){
+        if(i ==0){
+            String errorMsg = "Start of recipe, can't go back more.";
+            System.out.println(errorMsg);
+            t1.speak(errorMsg, TextToSpeech.QUEUE_FLUSH, null,null);
+        }else{
+            i--;
+            System.out.println(recipeList[i]);
+            t1.speak(recipeList[i], TextToSpeech.QUEUE_FLUSH, null,null);
+        }
+    }
 
     public void buttonOnClick() {
-        initVOl = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
+        initVol = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
         int maxVol = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int curVol = audio.getStreamVolume(AudioManager.STREAM_MUSIC);
-        int minVol = (int) (curVol*0.6);
+        int minVol = (int) (initVol*0.6);
         //Button button=(Button)v;
         //((Button) v).setText("clicked");
         audio.setStreamVolume(AudioManager.STREAM_MUSIC, Math.min(minVol, (int)(maxVol*0.45)), 0); //AudioManager.ADJUST_MUTE
@@ -130,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     public void buttonOnClick2() {
        // Button button=(Button)v;
         //((Button) v).setText("clicked");
-        audio.setStreamVolume(AudioManager.STREAM_MUSIC, initVOl, 1);
+        audio.setStreamVolume(AudioManager.STREAM_MUSIC, initVol, 1);
     }
     public void buttonOnClickAwareness(View v) {
         awareMode =! awareMode;
